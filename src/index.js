@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import store from './store';
 
 function Erying() {
@@ -19,6 +19,16 @@ function Qibinglian() {
   )
 }
 
+class Test extends React.Component {
+
+  render() {
+    console.log(this.props);
+
+    return(
+      <div>Test Component {this.props.match.params.location}</div>
+    )
+  }
+}
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
@@ -34,11 +44,13 @@ ReactDOM.render(
             <Link to="/qibinglian">骑兵连</Link>
           </li>
         </ul>
-        <Route path="/" exact component={App}></Route>
-        <Route path="/erying" component={Erying}></Route>
-        <Route path="/qibinglian" component={Qibinglian}></Route>
+        <Switch>
+          <Route path="/" exact component={App}></Route>
+          <Route path="/erying" component={Erying}></Route>
+          <Route path="/qibinglian" component={Qibinglian}></Route>
+          <Route path="/:location" component={Test}></Route>
+        </Switch>
       </div>
-
     </BrowserRouter>
 
   </Provider>,
