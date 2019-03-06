@@ -1,4 +1,4 @@
-import {ADD_GUN, ADD_GUN_ASYNC, REMOVE_GUN} from './constants';
+import {ADD_GUN, REMOVE_GUN} from './constants';
 
 export const addGun = () => {
   return {
