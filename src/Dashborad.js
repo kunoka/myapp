@@ -22,28 +22,23 @@ function Qibinglian() {
 )
 
 class Dashborad extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props);
-  }
-
   render() {
     const app = <div>
       <ul>
         <li>
-          <Link to="/dashboard/">一营</Link>
+          <Link to={`${this.props.match.url}/`}>一营</Link>
         </li>
         <li>
-          <Link to="/dashboard/erying">二营</Link>
+          <Link to={`${this.props.match.url}/erying`}>二营</Link>
         </li>
         <li>
-          <Link to="/dashboard/qibinglian">骑兵连</Link>
+          <Link to={`${this.props.match.url}/qibinglian`}>骑兵连</Link>
         </li>
       </ul>
       <Switch>
-        <Route path="/dashboard/" exact component={App}></Route>
-        <Route path="/dashboard/erying" component={Erying}></Route>
-        <Route path="/dashboard/qibinglian" component={Qibinglian}></Route>
+        <Route path={`${this.props.match.url}/`} exact component={App}></Route>
+        <Route path={`${this.props.match.url}/erying`} component={Erying}></Route>
+        <Route path={`${this.props.match.url}/qibinglian`} component={Qibinglian}></Route>
       </Switch>
     </div>;
     const loginComponent = <Redirect to="/login"/>;

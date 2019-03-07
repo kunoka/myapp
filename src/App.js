@@ -1,8 +1,7 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {Button} from 'antd-mobile';
 import {addGun, removeGun, addGunAsync} from './store/actionCreators';
 import {connect} from 'react-redux';
-import store from './store';
 import {logout} from './Auth.redux';
 
 const mapStateToProps = (state) => {
@@ -15,16 +14,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {addGun, removeGun, addGunAsync, logout};
 @connect(mapStateToProps, mapDispatchToProps)
 class App extends Component {
-  constructor(props) {
-    super(props);
-    // this.addGun = this.addGun.bind(this);
-    // this.removeGun = this.removeGun.bind(this);
-  }
-
-
   render() {
-    console.log('this.props');
-    console.log(this.props);
     return (
       <div>
         <h2>独立团长{this.props.auth.user}</h2>

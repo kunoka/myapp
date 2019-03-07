@@ -8,12 +8,7 @@ import {login, logout} from './Auth.redux';
 )
 
 class Auth extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    console.log('this.props.auth.isAuth');
-    console.log(this.props.auth.isAuth);
     return(
       <div>
         <h2>
