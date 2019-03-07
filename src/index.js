@@ -1,23 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import store from './store';
-
-function Erying() {
-  return (
-    <h2>二营</h2>
-  )
-}
-
-function Qibinglian() {
-  return (
-    <h2>骑兵连</h2>
-  )
-}
+import Auth from './Auth';
+import Dashboard from './Dashborad';
 
 class Test extends React.Component {
 
@@ -32,25 +22,11 @@ class Test extends React.Component {
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">一营</Link>
-          </li>
-          <li>
-            <Link to="/erying">二营</Link>
-          </li>
-          <li>
-            <Link to="/qibinglian">骑兵连</Link>
-          </li>
-        </ul>
-        <Switch>
-          <Route path="/" exact component={App}></Route>
-          <Route path="/erying" component={Erying}></Route>
-          <Route path="/qibinglian" component={Qibinglian}></Route>
-          <Route path="/:location" component={Test}></Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route path='/login' component={Auth}></Route>
+        <Route path='/dashboard' component={Dashboard}></Route>
+        <Redirect to='/dashboard' component={Dashboard}></Redirect>
+      </Switch>
     </BrowserRouter>
 
   </Provider>,
