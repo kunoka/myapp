@@ -29,7 +29,7 @@ const User = mongoose.model('user', new mongoose.Schema({
 // 	console.log(doc);
 // })
 // 更新
-// User.update({'user':'xiaohua'},{age: 29}, 
+// User.update({'user':'xiaohua'},{age: 29},
 // 	function(err, doc){
 // 		console.log(doc);
 // 	}

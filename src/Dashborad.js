@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Switch, Link, Route, Redirect} from 'react-router-dom';
+import axios from 'axios';
 import App from './App';
 import {login, logout} from './Auth.redux';
 
@@ -22,6 +23,10 @@ function Qibinglian() {
 )
 
 class Dashborad extends React.Component {
+
+  componentDidMount() {
+
+  }
   render() {
     const app = <div>
       <ul>

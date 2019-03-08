@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/core": "7.2.2",
+    "@babel/core": "^7.3.4",
     "@svgr/webpack": "4.1.0",
     "antd-mobile": "^2.2.0-beta.1",
+    "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -120,6 +121,7 @@
       "/Users/harry/Desktop/2019/Study/FE/React/myapp/node_modules/jest-watch-typeahead/testname.js"
     ]
   },
+  "proxy": "http://localhost:9527",
   "babel": {
     "presets": [
       "react-app"

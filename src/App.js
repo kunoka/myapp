@@ -14,10 +14,19 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {addGun, removeGun, addGunAsync, logout};
 @connect(mapStateToProps, mapDispatchToProps)
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    }
+  }
+
+  componentDidMount() {
+    this.props.getUserData()
+  }
   render() {
     return (
       <div>
-        <h2>独立团长{this.props.auth.user}</h2>
+        <h2>独立团长{this.props.auth.user} 年龄{this.props.auth.age}</h2>
         {this.props.auth.isAuth ? <button onClick={this.props.logout}>注销</button> : null}
         <p>
           <Button type="primary" onClick={this.props.addGun}>增加枪</Button>
