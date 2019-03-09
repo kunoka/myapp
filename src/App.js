@@ -21,12 +21,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserData()
   }
   render() {
     return (
       <div>
-        <h2>独立团长{this.props.auth.user} 年龄{this.props.auth.age}</h2>
         {this.props.auth.isAuth ? <button onClick={this.props.logout}>注销</button> : null}
         <p>
           <Button type="primary" onClick={this.props.addGun}>增加枪</Button>

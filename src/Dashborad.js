@@ -24,9 +24,6 @@ function Qibinglian() {
 
 class Dashborad extends React.Component {
 
-  componentDidMount() {
-
-  }
   render() {
     const app = <div>
       <ul>

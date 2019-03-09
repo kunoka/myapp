@@ -7,6 +7,7 @@ import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import store from './store';
 import Auth from './Auth';
 import Dashboard from './Dashborad';
+import './config';
 
 ReactDOM.render(
   <Provider store={store}>
