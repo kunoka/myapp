@@ -14,6 +14,11 @@ import AuthRouter from './components/authrouter';
 //   applyMiddleware(thunk),
 //   window.devToolsExtension ? window.devToolsExtension() : f=>f
 // ));
+function Boss() {
+  return (
+    <div>Boss</div>
+  )
+}
 ReactDOM.render(
   <div>
     <BrowserRouter>
@@ -21,6 +26,7 @@ ReactDOM.render(
         <AuthRouter></AuthRouter>
         <Route path='/login' component={Login}></Route>
         <Route path='/register' component={Register}></Route>
+        <Route path='/boss' component={Boss}></Route>
       </div>
     </BrowserRouter>
 
