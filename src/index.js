@@ -8,6 +8,7 @@ import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import './config';
 import Login from './container/login/login';
 import Register from './container/register/register';
+import AuthRouter from './components/authrouter';
 
 // const store = createStore(reducers, compose(
 //   applyMiddleware(thunk),
@@ -17,6 +18,7 @@ ReactDOM.render(
   <div>
     <BrowserRouter>
       <div>
+        <AuthRouter></AuthRouter>
         <Route path='/login' component={Login}></Route>
         <Route path='/register' component={Register}></Route>
       </div>

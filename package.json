@@ -122,7 +122,7 @@
       "/Users/harry/Desktop/2019/Study/FE/React/myapp/node_modules/jest-watch-typeahead/testname.js"
     ]
   },
-  "proxy": "http://localhost:9527",
+  "proxy": "http://localhost:9093",
   "babel": {
     "presets": [
       "react-app"
