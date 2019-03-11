@@ -4,23 +4,23 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
-// import reducers from './reducer';
+import reducers from './reducer';
 import './config';
 import Login from './container/login/login';
 import Register from './container/register/register';
 import AuthRouter from './components/authrouter';
 
-// const store = createStore(reducers, compose(
-//   applyMiddleware(thunk),
-//   window.devToolsExtension ? window.devToolsExtension() : f=>f
-// ));
+const store = createStore(reducers, compose(
+  applyMiddleware(thunk),
+  window.devToolsExtension ? window.devToolsExtension() : f=>f
+));
 function Boss() {
   return (
     <div>Boss</div>
   )
 }
 ReactDOM.render(
-  <div>
+  <Provider store={store}>
     <BrowserRouter>
       <div>
         <AuthRouter></AuthRouter>
@@ -29,7 +29,6 @@ ReactDOM.render(
         <Route path='/boss' component={Boss}></Route>
       </div>
     </BrowserRouter>
-
-  </div>,
+  </Provider>,
   document.getElementById('root'));
 
