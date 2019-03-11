@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {getRedirectPath} from '../utils';
 // constants
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 const ERR_MSG = 'ERR_MSG';
@@ -27,7 +27,7 @@ export const register = ({user, pwd, rptpwd, type}) => {
   return (dispatch) => {
     const data = {user, pwd, rptpwd, type};
     axios.post('/user/register', data).then((res) => {
-      dispatch(registerSuccess(res.data));
+      dispatch(registerSuccess(data));
     });
   }
 }
@@ -39,12 +39,13 @@ const defaultState = {
   pwd: '',
   rptpwd: '',
   type: '',
-  msg: ''
+  msg: '',
+  redirectTo: ''
 }
 export default function user(state = defaultState, action) {
   switch (action.type) {
     case REGISTER_SUCCESS:
-      return {...state, isAuth: true, ...action.data}
+      return {...state, isAuth: true, redirectTo: getRedirectPath(action.data),  ...action.data}
     case ERR_MSG:
         return {...state, isAuth: false, msg: action.msg}
     default:
