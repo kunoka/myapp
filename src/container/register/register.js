@@ -1,5 +1,5 @@
 import React from 'react';
-import {WingBlank, WhiteSpace, InputItem, Button, List, Radio} from 'antd-mobile';
+import {WhiteSpace, InputItem, Button, List, Radio} from 'antd-mobile';
 import Logo from '../../components/logo/logo';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
