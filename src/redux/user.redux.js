@@ -3,6 +3,7 @@ import {getRedirectPath} from '../utils';
 // constants
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+const LOAD_DATA = 'LOAD_DATA';
 const ERR_MSG = 'ERR_MSG';
 
 //actionCreators
@@ -21,6 +22,12 @@ function loginSuccess(data) {
 function registerSuccess(data) {
   return {
     type: REGISTER_SUCCESS,
+    data
+  }
+}
+export function loadData(data) {
+  return {
+    type: LOAD_DATA,
     data
   }
 }
@@ -62,14 +69,14 @@ export const register = ({user, pwd, rptpwd, type}) => {
 const defaultState = {
   isAuth: false,
   user: '',
-  pwd: '',
-  rptpwd: '',
   type: '',
   msg: '',
   redirectTo: ''
 }
 export default function user(state = defaultState, action) {
   switch (action.type) {
+    case LOAD_DATA:
+      return {...state, ...action.data}
     case LOGIN_SUCCESS:
       return {...state, isAuth: true, redirectTo: getRedirectPath(action.data),  ...action.data}
     case REGISTER_SUCCESS:
