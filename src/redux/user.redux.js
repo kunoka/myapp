@@ -1,8 +1,7 @@
 import axios from 'axios';
 import {getRedirectPath} from '../utils';
 // constants
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const LOAD_DATA = 'LOAD_DATA';
 const ERR_MSG = 'ERR_MSG';
 
@@ -13,15 +12,9 @@ function errorMsg(msg) {
     msg
   }
 }
-function loginSuccess(data) {
+function authSuccess(data) {
   return {
-    type: LOGIN_SUCCESS,
-    data
-  }
-}
-function registerSuccess(data) {
-  return {
-    type: REGISTER_SUCCESS,
+    type: AUTH_SUCCESS,
     data
   }
 }
@@ -39,7 +32,7 @@ export const login = ({user, pwd}) => {
     const data = {user, pwd}
     axios.post('/user/login', data).then((res) => {
       if(res.status===200 && res.data.code === 0) {
-        dispatch(loginSuccess(res.data.data));
+        dispatch(authSuccess(res.data.data));
       }else{
         dispatch(errorMsg(res.data.msg));
       }
@@ -57,14 +50,28 @@ export const register = ({user, pwd, rptpwd, type}) => {
     const data = {user, pwd, rptpwd, type};
     axios.post('/user/register', data).then((res) => {
       if(res.status === 200 && res.data.code === 0) {
-        dispatch(registerSuccess(data));
+        console.log('data');
+        console.log(data);
+        dispatch(authSuccess(data));
       }else{
         dispatch(errorMsg(res.data.msg));
       }
     });
   }
 }
-
+export const update = (data) => {
+  return (dispatch) => {
+    axios.post('/user/update', data).then((res) => {
+      if(res.status === 200 && res.data.code === 0) {
+        console.log('res.data.data');
+        console.log(res.data.data);
+        dispatch(authSuccess(res.data.data));
+      }else{
+        dispatch(errorMsg(res.data.msg));
+      }
+    });
+  }
+}
 // reducer
 const defaultState = {
   isAuth: false,
@@ -77,9 +84,9 @@ export default function user(state = defaultState, action) {
   switch (action.type) {
     case LOAD_DATA:
       return {...state, ...action.data}
-    case LOGIN_SUCCESS:
-      return {...state, isAuth: true, redirectTo: getRedirectPath(action.data),  ...action.data}
-    case REGISTER_SUCCESS:
+    case AUTH_SUCCESS:
+      console.log('action');
+      console.log(action);
       return {...state, isAuth: true, redirectTo: getRedirectPath(action.data),  ...action.data}
     case ERR_MSG:
         return {...state, isAuth: false, msg: action.msg}

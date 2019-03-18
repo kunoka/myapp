@@ -8,6 +8,7 @@ const _filter = {'pwd': 0, '__v': 0}
 Router.get('/list', function (req, res) {
   //清空所有数据
   // User.remove({}, function (e,d) {});
+  console.log('user list');
   User.find({}, function (err, doc) {
     return res.json(doc)
   })
@@ -25,7 +26,6 @@ Router.post('/login', function (req, res) {
   })
 });
 Router.post('/register', function(req, res) {
-  console.log(req.body);
   const {user, pwd, type} = req.body;
   User.findOne({user}, function (err, doc) {
     if(doc) {
@@ -40,6 +40,17 @@ Router.post('/register', function(req, res) {
       res.cookie('userid', _id);
       return res.json({code: 0, data:  {user, type, _id}});
     })
+  })
+});
+Router.post('/update', function (req, res) {
+  const userid = req.cookies.userid;
+  if(!userid) {
+    return res.json({code:1, msg: 'userid没有找到'});
+  }
+  const body = req.body;
+  User.findOneAndUpdate(userid, body, function (err, doc) {
+    const data = Object.assign({}, {user:doc.user, type:doc.type}, body);
+    return res.json({code: 0, data})
   })
 })
 Router.get('/info', function (req, res) {

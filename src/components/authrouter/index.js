@@ -30,7 +30,6 @@ class AuthRouter extends React.Component {
   render() {
     return (
       <div>
-        user auth
       </div>
     )
   }
