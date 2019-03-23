@@ -1,4 +1,5 @@
 export const getRedirectPath = ({type, avatar}) => {
+  debugger
   let url;
   if(type === 'boss') {
     url = '/boss';

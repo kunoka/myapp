@@ -9,6 +9,7 @@ import './config';
 import Login from './container/login/login';
 import Register from './container/register/register';
 import BossInfo from './container/bossinfo';
+import GeniusInfo from './container/geniusinfo';
 import AuthRouter from './components/authrouter';
 
 const store = createStore(reducers, compose(
@@ -32,6 +33,7 @@ ReactDOM.render(
           <Route path='/register' component={Register}></Route>
           <Route path='/boss' component={Boss}></Route>
           <Route path='/bossinfo' component={BossInfo}></Route>
+          <Route path='/geniusinfo' component={GeniusInfo}></Route>
         </Switch>
       </div>
     </BrowserRouter>

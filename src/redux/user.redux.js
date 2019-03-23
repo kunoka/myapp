@@ -12,7 +12,8 @@ function errorMsg(msg) {
     msg
   }
 }
-function authSuccess(data) {
+function authSuccess(obj) {
+  const {pwd, ...data} = obj;
   return {
     type: AUTH_SUCCESS,
     data

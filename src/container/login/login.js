@@ -4,6 +4,7 @@ import {InputItem, WhiteSpace, WingBlank, Button} from 'antd-mobile';
 import {login} from '../../redux/user.redux';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 @connect(
   state => state.user,
@@ -17,6 +18,7 @@ class Login extends React.Component {
       pwd: ''
     }
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
   }
 
   handleChange(key, v) {
@@ -26,6 +28,9 @@ class Login extends React.Component {
   }
   handleLogin() {
     this.props.login(this.state);
+  }
+  handleRegister() {
+    this.props.history.push('/register');
   }
   render() {
     return (
@@ -40,10 +45,12 @@ class Login extends React.Component {
           <InputItem type="password" onChange={(v) => this.handleChange('pwd', v)}>密码</InputItem>
           <WhiteSpace />
           <Button type="primary" onClick={this.handleLogin}>登录</Button>
+          <br/>
+         <Button type="primary" onClick={this.handleRegister}>注册</Button>
         </WingBlank>
       </div>
     )
   }
 }
 
-export default Login
+export default withRouter(Login)
