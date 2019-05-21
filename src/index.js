@@ -18,11 +18,6 @@ const store = createStore(reducers, compose(
   window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
 ));
 
-function Boss() {
-  return (
-    <div>Boss</div>
-  )
-}
 
 ReactDOM.render(
   <Provider store={store}>
@@ -33,7 +28,6 @@ ReactDOM.render(
         <Switch>
           <Route path='/login' component={Login}></Route>
           <Route path='/register' component={Register}></Route>
-          <Route path='/boss' component={Boss}></Route>
           <Route path='/bossinfo' component={BossInfo}></Route>
           <Route path='/geniusinfo' component={GeniusInfo}></Route>
           <Route component={Dashboard}></Route>
