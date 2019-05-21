@@ -8,8 +8,9 @@ const _filter = {'pwd': 0, '__v': 0}
 Router.get('/list', function (req, res) {
   //清空所有数据
   // User.remove({}, function (e,d) {});
+  const {type} = req.query;
   console.log('user list');
-  User.find({}, function (err, doc) {
+  User.find({type}, function (err, doc) {
     return res.json(doc)
   })
 })
