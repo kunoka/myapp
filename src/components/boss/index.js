@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Card, WhiteSpace, WingBlank} from 'antd-mobile';
+import {getUserList} from '../../redux/chatuser.redux';
+import {connect} from 'react-redux';
+@connect(
+  state => state.chatuser,
+  {getUserList}
+)
 
-export default class Boss extends Component {
+class Boss extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,16 +17,11 @@ export default class Boss extends Component {
   }
 
   componentDidMount() {
-    axios.get('/user/list?type=genius').then((res) => {
-      console.log(res.data);
-      this.setState({
-        data: res.data
-      })
-    })
+    this.props.getUserList('genius');
   }
 
   render() {
-    const {data} = this.state;
+    const data= this.props.userList;
     console.log('render-data', data);
     const Header = Card.Header;
     const Body = Card.Body;
@@ -50,3 +51,5 @@ export default class Boss extends Component {
     )
   }
 }
+
+export default Boss
