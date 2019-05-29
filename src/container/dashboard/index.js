@@ -6,13 +6,12 @@ import NavLinkBar from '../../components/navlink';
 
 import Boss from '../../components/boss';
 import Genius from '../../components/genius';
+import User from '../../components/user';
 
 function Msg() {
   return <h2>msg</h2>
 }
-function User() {
-  return <h2>User</h2>
-}
+
 @connect(state => state)
 class Dashboard extends React.Component {
 
