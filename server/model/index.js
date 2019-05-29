@@ -11,7 +11,6 @@ const models = {
     'avatar': {'type': String},
     'desc': {'type': String},
     'title': {'type': String},
-
     //如果是BOSS
     'company': {'type': String},
     'money': {'type': String},

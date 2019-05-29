@@ -5,9 +5,8 @@ import {connect} from 'react-redux';
 import NavLinkBar from '../../components/navlink';
 
 import Boss from '../../components/boss';
-function Genius() {
-  return <h2>Genius</h2>
-}
+import Genius from '../../components/genius';
+
 function Msg() {
   return <h2>msg</h2>
 }
@@ -30,16 +29,17 @@ class Dashboard extends React.Component {
         icon: 'boss',
         title: '牛人列表',
         component: Boss,
-        hide: user.type !== 'genius'
+        hide: user.type === 'genius'
       },
       {
         path: '/genius',
-        text: 'boss',
+        text: 'BOSS',
         icon: 'job',
         title: 'BOSS列表',
-        component: Boss,
-        hide: user.type !== 'boss'
+        component: Genius,
+        hide: user.type === 'boss'
       },
+
       {
         path: '/msg',
         text: '消息',
@@ -49,13 +49,6 @@ class Dashboard extends React.Component {
       },
       {
         path: '/me',
-        text: '我',
-        icon: 'user',
-        title: '个人中心',
-        component: User,
-      },
-      {
-        path: '/',
         text: '我',
         icon: 'user',
         title: '个人中心',

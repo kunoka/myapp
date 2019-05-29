@@ -8,5 +8,6 @@ export const getRedirectPath = ({type, avatar}) => {
   if(!avatar) {
     url += 'info'
   }
+  console.log('redirect url: ', url);
   return url;
 }

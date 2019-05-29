@@ -13,12 +13,12 @@ class BossInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      avatar: '',
       title: '',
-      company: '',
-      money: '',
       desc: '',
-      type: 'boos',
-      avatar: ''
+      type: 'boss',
+      company: '',
+      money: ''
     }
     this.setAvatar = this.setAvatar.bind(this);
   }
