@@ -26,16 +26,19 @@ class Login extends React.Component {
       [key]: v
     });
   }
+
   handleLogin() {
     this.props.login(this.state);
   }
+
   handleRegister() {
     this.props.history.push('/register');
   }
+
   render() {
     return (
       <div>
-        {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null}
+        {this.props.redirectTo && this.props.redirectTo !== '/login' ? <Redirect to={this.props.redirectTo}/> : null}
         <Logo></Logo>
         <h2>我是登录页面</h2>
         <WingBlank>
@@ -43,10 +46,10 @@ class Login extends React.Component {
           <InputItem onChange={(v) => this.handleChange('user', v)}>用户名</InputItem>
           <WhiteSpace/>
           <InputItem type="password" onChange={(v) => this.handleChange('pwd', v)}>密码</InputItem>
-          <WhiteSpace />
+          <WhiteSpace/>
           <Button type="primary" onClick={this.handleLogin}>登录</Button>
           <br/>
-         <Button type="primary" onClick={this.handleRegister}>注册</Button>
+          <Button type="primary" onClick={this.handleRegister}>注册</Button>
         </WingBlank>
       </div>
     )
