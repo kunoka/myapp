@@ -13,7 +13,7 @@ Router.get('/list', function (req, res) {
   User.find({type}, function (err, doc) {
     return res.json(doc)
   })
-})
+});
 Router.post('/login', function (req, res) {
   console.log(req.body);
   const {user, pwd} = req.body;
