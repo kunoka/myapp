@@ -6,6 +6,20 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 
+function hello() {
+  console.log('say hello');
+}
+
+function WrapperHello(fn) {
+  return function() {
+    console.log('before hello');
+    fn();
+    console.log('after hello');
+  }
+}
+
+hello = WrapperHello(hello);
+hello();
 @connect(
   state => state.user,
   {login}
