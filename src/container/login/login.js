@@ -1,48 +1,26 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Logo from '../../components/logo/logo';
 import {InputItem, WhiteSpace, WingBlank, Button} from 'antd-mobile';
 import {login} from '../../redux/user.redux';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
+import imoocForm from '../../components/imooc-form';
 
-function hello() {
-  console.log('say hello');
-}
-
-function WrapperHello(fn) {
-  return function() {
-    console.log('before hello');
-    fn();
-    console.log('after hello');
-  }
-}
-
-hello = WrapperHello(hello);
-hello();
 @connect(
   state => state.user,
   {login}
 )
+@imoocForm
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: '',
-      pwd: ''
-    }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
   }
 
-  handleChange(key, v) {
-    this.setState({
-      [key]: v
-    });
-  }
-
   handleLogin() {
-    this.props.login(this.state);
+    this.props.login(this.props.state);
   }
 
   handleRegister() {
@@ -57,9 +35,9 @@ class Login extends React.Component {
         <h2>我是登录页面</h2>
         <WingBlank>
           <div className="error-msg">{this.props.msg}</div>
-          <InputItem onChange={(v) => this.handleChange('user', v)}>用户名</InputItem>
+          <InputItem onChange={(v) => this.props.handleChange('user', v)}>用户名</InputItem>
           <WhiteSpace/>
-          <InputItem type="password" onChange={(v) => this.handleChange('pwd', v)}>密码</InputItem>
+          <InputItem type="password" onChange={(v) => this.props.handleChange('pwd', v)}>密码</InputItem>
           <WhiteSpace/>
           <Button type="primary" onClick={this.handleLogin}>登录</Button>
           <br/>
