@@ -12,7 +12,7 @@ import imoocForm from '../../components/imooc-form';
   {login}
 )
 @imoocForm
-class Login extends React.Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);

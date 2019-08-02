@@ -16,7 +16,7 @@ class User extends Component {
 
   logout() {
     const alert = Modal.alert;
-    const alertInstance = alert('注销', '是否退出登陆???', [
+    alert('注销', '是否退出登陆???', [
       {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
       {
         text: '确认', onPress: () => {

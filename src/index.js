@@ -13,7 +13,7 @@ import GeniusInfo from './container/geniusinfo';
 import Dashboard from './container/dashboard';
 import Chat from './container/chat';
 import AuthRouter from './components/authrouter';
-
+import './index.css';
 const store = createStore(reducers, compose(
   applyMiddleware(thunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
