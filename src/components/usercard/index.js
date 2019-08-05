@@ -5,8 +5,9 @@ import {withRouter} from "react-router-dom";
 @withRouter
 class UserCard extends Component {
   handleClick(v) {
-    this.props.history.push(`/chat/${v.user}`)
+    this.props.history.push(`/chat/${v._id}`)
   }
+
   render() {
     const data = this.props.userList;
     const Header = Card.Header;
@@ -28,11 +29,11 @@ class UserCard extends Component {
                 >
                 </Header>
                 <Body>
-                {item.type === 'boss' ? <div>公司：{item.company}</div> : null}
-                {item.desc.split('\n').map((v => (
-                  <div key={v}>{v}</div>
-                )))}
-                {item.type === 'boss' ? <div>薪资：{item.money}</div> : null}
+                  {item.type === 'boss' ? <div>公司：{item.company}</div> : null}
+                  {item.desc.split('\n').map((v => (
+                    <div key={v}>{v}</div>
+                  )))}
+                  {item.type === 'boss' ? <div>薪资：{item.money}</div> : null}
                 </Body>
               </Card> : null
             )
