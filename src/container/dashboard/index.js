@@ -7,15 +7,27 @@ import NavLinkBar from '../../components/navlink';
 import Boss from '../../components/boss';
 import Genius from '../../components/genius';
 import User from '../../components/user';
+import {getMsgList, recvMsg} from '../../redux/chat.redux';
 
 function Msg() {
   return <h2>msg</h2>
 }
 
-@connect(state => state)
+@connect(
+  state => state,
+  {getMsgList, recvMsg}
+)
 class Dashboard extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+  }
 
+  componentDidMount() {
+    this.props.getMsgList();
+    this.props.recvMsg();
+  }
+
+  render() {
     const {pathname} = this.props.location;
     const user = this.props.user;
     const navList = [
@@ -51,9 +63,9 @@ class Dashboard extends React.Component {
         component: User,
       }
     ];
-    return(
+    return (
       <div>
-        {!this.props.user.isAuth && <Redirect to="/login" />}
+        {!this.props.user.isAuth && <Redirect to="/login"/>}
         <NavBar mode='dard'>
           {this.props.user.isAuth && navList.find(v => v.path === pathname).title}</NavBar>
         <div>
@@ -65,7 +77,7 @@ class Dashboard extends React.Component {
             })}
           </Switch>
         </div>
-        <NavLinkBar data={navList} />
+        <NavLinkBar data={navList}/>
       </div>
     )
   }

@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const cookieParser = require('cookie-parser');
-
-const app = express();
 const model = require('./model');
 const User = model.getModel('user');
 const Chat = model.getModel('chat');
+
+const app = express();
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);

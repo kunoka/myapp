@@ -12,7 +12,6 @@ export const userList = (data) => {
 export function getUserList(type) {
   return (dispatch) => {
     axios.get('/user/list?type=' + type).then((res) => {
-      console.log(res.data);
       dispatch(userList(res.data));
     });
   }

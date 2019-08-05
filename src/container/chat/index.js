@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {List, InputItem, NavBar} from 'antd-mobile';
 import {connect} from 'react-redux';
-import {getMsgList, sendMsg, recvMsg} from '../../redux/chat.redux';
+import {sendMsg} from '../../redux/chat.redux';
 
 const Item = List.Item;
 
 @connect(
   state => state,
-  {getMsgList, sendMsg, recvMsg}
+  {sendMsg}
 )
 class Chat extends Component {
   constructor(props) {
@@ -19,9 +19,7 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.props.getMsgList();
-    this.props.recvMsg();
-    // socket.on('recvmsg', (data) => {
+    // // socket.on('recvmsg', (data) => {
     //   console.log(data);
     //   this.setState({
     //     msg: [...this.state.msg, data.text]
@@ -30,7 +28,7 @@ class Chat extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log('this.props.chat', this.props.chat);
+    // console.log('this.props.chat', this.props.chat);
   }
 
   handleChange(v) {
@@ -44,9 +42,6 @@ class Chat extends Component {
     const to = this.props.match.params.user;
     const msg = this.state.text;
     this.props.sendMsg({from, to, msg});
-    // const {text} = this.state;
-    // socket.emit('sendmsg', {text});
-    // console.log('text', {text})
     this.setState({
       text: ''
     })
@@ -62,7 +57,6 @@ class Chat extends Component {
         </NavBar>
 
         {this.props.chat.chatmsg.map((v, index) => {
-          console.log(v.from, user);
           return v.from === user ?
             (<List key={v._id}>
               <Item
@@ -72,7 +66,8 @@ class Chat extends Component {
             (<List key={v._id}>
               <Item
                 extra={'avatar'}
-                className='chat-me'>{v.content}</Item>
+                className='chat-me'
+              >{v.content}</Item>
             </List>)
         })}
 
