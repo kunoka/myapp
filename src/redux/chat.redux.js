@@ -53,9 +53,9 @@ const initState = {
 export default (state = initState, action) => {
   switch (action.type) {
     case MSG_LIST:
-      return {...state, chatmsg: action.data, read: action.data.filter(v => !v.read).length + 1}
+      return {...state, chatmsg: action.data, read: action.data.filter(v => !v.read).length}
     case MSG_RECV:
-      return {...state, chatmsg: [...state.chatmsg, action.msg]}
+      return {...state, chatmsg: [...state.chatmsg, action.data], unread: state.unread+1}
     default:
       return state;
   }

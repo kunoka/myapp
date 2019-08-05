@@ -5,7 +5,9 @@ const User = model.getModel('user');
 const Chat = model.getModel('chat');
 const Utility = require('utility');
 const _filter = {'pwd': 0, '__v': 0}
-
+// Chat.remove({}, function(err, res){
+//
+// })
 Router.get('/list', function (req, res) {
   //清空所有数据
   // User.remove({}, function (e,d) {});

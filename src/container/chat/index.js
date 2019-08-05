@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {List, InputItem} from 'antd-mobile';
+import {List, InputItem, NavBar} from 'antd-mobile';
 import {connect} from 'react-redux';
 import {getMsgList, sendMsg, recvMsg} from '../../redux/chat.redux';
+
+const Item = List.Item;
 
 @connect(
   state => state,
@@ -27,6 +29,10 @@ class Chat extends Component {
     // })
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('this.props.chat', this.props.chat);
+  }
+
   handleChange(v) {
     this.setState({
       text: v
@@ -37,7 +43,7 @@ class Chat extends Component {
     const from = this.props.user._id;
     const to = this.props.match.params.user;
     const msg = this.state.text;
-    this.props.sendMsg({from, to,msg});
+    this.props.sendMsg({from, to, msg});
     // const {text} = this.state;
     // socket.emit('sendmsg', {text});
     // console.log('text', {text})
@@ -48,10 +54,26 @@ class Chat extends Component {
 
   render() {
     const {text, msg} = this.state;
+    const {user} = this.props.match.params;
     return (
-      <div>
-        {msg.map((v, index) => {
-          return (<p key={index}>{v}</p>)
+      <div id='chat-page'>
+        <NavBar mode="dark">
+          {user}
+        </NavBar>
+
+        {this.props.chat.chatmsg.map((v, index) => {
+          console.log(v.from, user);
+          return v.from === user ?
+            (<List key={v._id}>
+              <Item
+              >{v.content}</Item>
+            </List>)
+            :
+            (<List key={v._id}>
+              <Item
+                extra={'avatar'}
+                className='chat-me'>{v.content}</Item>
+            </List>)
         })}
 
         <div className="stick-footer">

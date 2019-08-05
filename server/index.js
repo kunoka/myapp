@@ -17,8 +17,8 @@ io.on('connection', function (socket) {
     const {from, to, msg} = data;
     const chatid = [from, to].sort().join('-');
     // 处理收到的数据，存入数据库，全局发送
-    Chat.create({from, to, chatid, content: msg}, function(err) {
-      io.emit('recvmsg', data);
+    Chat.create({from, to, chatid, content: msg}, function(err, doc) {
+      io.emit('recvmsg', Object.assign({}, doc._doc));
     });
   })
 })
