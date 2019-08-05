@@ -95,10 +95,7 @@ export default function user(state = defaultState, action) {
     case LOAD_DATA:
       return {...state, ...action.data}
     case AUTH_SUCCESS:
-      console.log('action');
-      console.log(action);
       const result = {...state, isAuth: true, redirectTo: getRedirectPath(action.data), ...action.data};
-      console.log(result)
       return result;
     case LOGOUT:
       return {...defaultState, redirectTo: '/login'}

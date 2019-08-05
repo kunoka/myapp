@@ -17,8 +17,6 @@ class Dashboard extends React.Component {
   render() {
 
     const {pathname} = this.props.location;
-    console.log('pathname');
-    console.log(pathname);
     const user = this.props.user;
     const navList = [
       {

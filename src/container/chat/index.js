@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import io from 'socket.io-client';
 import {List, InputItem} from 'antd-mobile';
+import {connect} from 'react-redux';
+import {getMsgList} from '../../redux/chat.redux';
 
-const socket = io('ws://localhost:9093');
-
-export default class Chat extends Component {
+@connect(
+  state => state,
+  {getMsgList}
+)
+class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,12 +17,13 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    socket.on('recvmsg', (data) => {
-      console.log(data);
-      this.setState({
-        msg: [...this.state.msg, data.text]
-      })
-    })
+    this.props.getMsgList();
+    // socket.on('recvmsg', (data) => {
+    //   console.log(data);
+    //   this.setState({
+    //     msg: [...this.state.msg, data.text]
+    //   })
+    // })
   }
 
   handleChange(v) {
@@ -29,19 +33,19 @@ export default class Chat extends Component {
   }
 
   handleSend() {
-    const {text} = this.state;
-    socket.emit('sendmsg', {text});
-    console.log('text', {text})
-    this.setState({
-      text: ''
-    })
+    // const {text} = this.state;
+    // socket.emit('sendmsg', {text});
+    // console.log('text', {text})
+    // this.setState({
+    //   text: ''
+    // })
   }
 
   render() {
     const {text, msg} = this.state;
     return (
       <div>
-        {msg.map((v,index) => {
+        {msg.map((v, index) => {
           return (<p key={index}>{v}</p>)
         })}
 
@@ -63,3 +67,5 @@ export default class Chat extends Component {
     )
   }
 }
+
+export default Chat

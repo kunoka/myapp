@@ -2,6 +2,7 @@ const express = require('express');
 const Router = express.Router();
 const model = require('../model');
 const User = model.getModel('user');
+const Chat = model.getModel('chat');
 const Utility = require('utility');
 const _filter = {'pwd': 0, '__v': 0}
 
@@ -11,8 +12,16 @@ Router.get('/list', function (req, res) {
   const {type} = req.query;
   console.log('user list');
   User.find({type}, function (err, doc) {
-    return res.json(doc)
+    return res.json(doc);
   })
+});
+Router.get('/getMsgList', function (req, res) {
+  const user = req.cookies.userid;
+  Chat.find({}, function (err, doc) {
+    if (!err) {
+      return res.json({code: 0, msgs: doc});
+    }
+  });
 });
 Router.post('/login', function (req, res) {
   console.log(req.body);

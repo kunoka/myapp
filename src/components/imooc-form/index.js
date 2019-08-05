@@ -9,7 +9,7 @@ export default function imoocForm (Comp) {
     }
 
     handleChange(key, v) {
-      console.log(key, v);
+      // console.log(key, v);
       this.setState({
         [key]: v
       });
