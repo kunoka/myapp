@@ -8,26 +8,29 @@ const MSG_LIST = 'MSG_LIST';
 const MSG_RECV = 'MSG_RECV';
 const MSG_READ = 'MSG_READ';
 
-function msgList(data) {
+function msgList(data, userid) {
   return {
     type: MSG_LIST,
-    data
+    data,
+    userid
   }
 }
 
-function msgRecv(data) {
+function msgRecv(data, userid) {
   return {
     type: MSG_RECV,
-    data
+    data,
+    userid
   }
 }
 
 // 收消息
 export function recvMsg() {
-  return dispatch => {
+  return (dispatch, getState) => {
     socket.on('recvmsg', function (data) {
       // console.log('收到的群发消息',data);
-      dispatch(msgRecv(data));
+      const userid = getState().user._id;
+      dispatch(msgRecv(data, userid));
     })
   }
 }
@@ -42,10 +45,11 @@ export function sendMsg({from, to, msg}) {
 
 //  获取消息列表
 export const getMsgList = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
     axios.get('/user/getMsgList').then((res) => {
+      const userid = getState().user._id;
       if (res.status === 200 && res.data.code === 0) {
-        dispatch(msgList(res.data));
+        dispatch(msgList(res.data, userid));
       }
     });
   }
@@ -63,15 +67,17 @@ export default (state = initState, action) => {
         ...state,
         chatmsg: action.data.msgs,
         users: action.data.users,
-        read: action.data.msgs.filter(v => !v.read).length
+        unread: action.data.msgs.filter(v => !v.read && v.to === action.userid).length
       }
     case MSG_RECV:
       const finder = exist(state.chatmsg, action.data);
       if (!finder) {
+        const n = action.userid === action.data.to ? 1 : 0;
         return {
           ...state,
-          chatmsg: getChatMsg([...state.chatmsg, action.data]),
-          unread: state.unread + 1
+          chatmsg: [...state.chatmsg, action.data],
+          // chatmsg: getChatMsg([...state.chatmsg, action.data]),
+          unread: state.unread + n
         }
       }
 

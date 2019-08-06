@@ -23,10 +23,11 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getMsgList();
-    this.props.recvMsg();
+    if (!this.props.chat.users) {
+      this.props.getMsgList();
+      this.props.recvMsg();
+    }
   }
-
   render() {
     const {pathname} = this.props.location;
     const user = this.props.user;

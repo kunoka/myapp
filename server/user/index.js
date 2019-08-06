@@ -5,8 +5,8 @@ const User = model.getModel('user');
 const Chat = model.getModel('chat');
 const Utility = require('utility');
 const _filter = {'pwd': 0, '__v': 0}
-Chat.remove({}, function(err, doc){
-})
+// Chat.remove({}, function(err, doc){
+// })
 Router.get('/list', function (req, res) {
   //清空所有数据
   // User.remove({}, function (e,d) {});
@@ -19,11 +19,11 @@ Router.get('/list', function (req, res) {
 Router.get('/getMsgList', function (req, res) {
   const user = req.cookies.userid;
   console.log('user', user);
-  User.find({}, function(err, userdoc){
-    if(!err) {
+  User.find({}, function (err, userdoc) {
+    if (!err) {
       let users = {};
-      userdoc.forEach(v=> {
-         users[v._id] = {name: v.user, avatar: v.avatar}
+      userdoc.forEach(v => {
+        users[v._id] = {name: v.user, avatar: v.avatar}
       });
       Chat.find({}, function (err, doc) {
         if (!err) {

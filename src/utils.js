@@ -10,3 +10,7 @@ export const getRedirectPath = ({type, avatar}) => {
   }
   return url;
 }
+
+export function getChatId(userId, to){
+  return [userId, to].sort().join('-');
+}
