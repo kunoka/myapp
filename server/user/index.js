@@ -18,11 +18,23 @@ Router.get('/list', function (req, res) {
 });
 Router.get('/getMsgList', function (req, res) {
   const user = req.cookies.userid;
-  Chat.find({}, function (err, doc) {
-    if (!err) {
-      return res.json({code: 0, msgs: doc});
+  console.log('user', user);
+  User.find({}, function(err, userdoc){
+    if(!err) {
+      let users = {};
+      userdoc.forEach(v=> {
+         users[v._id] = {name: v.user, avatar: v.avatar}
+      });
+      Chat.find({}, function (err, doc) {
+        if (!err) {
+          console.log('msgs', doc);
+          console.log('users', users);
+          return res.json({code: 0, msgs: doc, users});
+        }
+      });
     }
-  });
+  })
+
 });
 Router.post('/login', function (req, res) {
   console.log(req.body);

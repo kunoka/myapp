@@ -26,6 +26,7 @@ function msgRecv(data) {
 export function recvMsg() {
   return dispatch => {
     socket.on('recvmsg', function (data) {
+      // console.log('收到的群发消息',data);
       dispatch(msgRecv(data));
     })
   }
@@ -34,6 +35,7 @@ export function recvMsg() {
 // 发送消息
 export function sendMsg({from, to, msg}) {
   return dispatch => {
+    // console.log('发出的消息', {from, to, msg});
     socket.emit('sendmsg', {from, to, msg});
   }
 }
@@ -43,24 +45,34 @@ export const getMsgList = () => {
   return dispatch => {
     axios.get('/user/getMsgList').then((res) => {
       if (res.status === 200 && res.data.code === 0) {
-        dispatch(msgList(res.data.msgs));
+        dispatch(msgList(res.data));
       }
     });
   }
 }
 const initState = {
   chatmsg: [],
+  users: null,
   unread: 0
 }
 
 export default (state = initState, action) => {
   switch (action.type) {
     case MSG_LIST:
-      return {...state, chatmsg: action.data, read: action.data.filter(v => !v.read).length}
+      return {
+        ...state,
+        chatmsg: action.data.msgs,
+        users: action.data.users,
+        read: action.data.msgs.filter(v => !v.read).length
+      }
     case MSG_RECV:
       const finder = exist(state.chatmsg, action.data);
       if (!finder) {
-        return {...state, chatmsg: getChatMsg([...state.chatmsg, action.data]), unread: state.unread + 1}
+        return {
+          ...state,
+          chatmsg: getChatMsg([...state.chatmsg, action.data]),
+          unread: state.unread + 1
+        }
       }
 
     default:
@@ -75,6 +87,7 @@ function exist(chatmsg, data) {
     });
     return !!finder;
   }
+  return false;
 }
 
 function getChatMsg(data) {

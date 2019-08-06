@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {List, InputItem, NavBar} from 'antd-mobile';
+import {List, InputItem, NavBar,Icon} from 'antd-mobile';
 import {connect} from 'react-redux';
-import {sendMsg} from '../../redux/chat.redux';
+import {getMsgList, sendMsg, recvMsg} from '../../redux/chat.redux';
 
 const Item = List.Item;
 
 @connect(
   state => state,
-  {sendMsg}
+  {getMsgList, sendMsg, recvMsg}
 )
 class Chat extends Component {
   constructor(props) {
@@ -19,13 +19,12 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    // // socket.on('recvmsg', (data) => {
-    //   console.log(data);
-    //   this.setState({
-    //     msg: [...this.state.msg, data.text]
-    //   })
-    // })
+    if (!this.props.chat.users) {
+      this.props.getMsgList();
+      this.props.recvMsg();
+    }
   }
+
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // console.log('this.props.chat', this.props.chat);
@@ -49,25 +48,34 @@ class Chat extends Component {
 
   render() {
     const {text, msg} = this.state;
-    const {user} = this.props.match.params;
+    const userid = this.props.match.params.user;
+    const {users} = this.props.chat;
+    if (!users) return null;
     return (
       <div id='chat-page'>
-        <NavBar mode="dark">
-          {user}
+        <NavBar
+          mode="dark"
+          icon={<Icon type="left" />}
+          onLeftClick={()=>{
+          this.props.history.goBack()
+          }}>
+          {users[userid].name}
         </NavBar>
 
         {this.props.chat.chatmsg.map((v, index) => {
-          return v.from === user ?
+          const avatar = require(`../../components/img/${users[v.from].avatar}.png`);
+          return v.from === userid ?
             (<List key={v._id}>
               <Item
+                thumb={avatar}
               >{v.content}</Item>
             </List>)
             :
             (<List key={v._id}>
               <Item
-                extra={'avatar'}
+                extra={<img src={avatar} alt="" />}
                 className='chat-me'
-              >{v.content}</Item>
+                >{v.content}</Item>
             </List>)
         })}
 
