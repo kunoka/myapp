@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {List, InputItem, NavBar,Icon} from 'antd-mobile';
+import {List, InputItem, NavBar, Icon, Grid} from 'antd-mobile';
 import {connect} from 'react-redux';
 import {getMsgList, sendMsg, recvMsg} from '../../redux/chat.redux';
 import {getChatId} from '../../utils';
+import {emojiList} from '../../constants/emojs';
 
 const Item = List.Item;
 
@@ -15,7 +16,8 @@ class Chat extends Component {
     super(props);
     this.state = {
       text: '',
-      msg: []
+      msg: [],
+      showEmoji: false
     }
   }
 
@@ -24,6 +26,14 @@ class Chat extends Component {
       this.props.getMsgList();
       this.props.recvMsg();
     }
+    this.fixCarousel();
+  }
+
+  // 修正跑马灯
+  fixCarousel() {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 0)
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -54,14 +64,17 @@ class Chat extends Component {
     const chatId = getChatId(this.props.user._id, userid);
     chatmsg = chatmsg.filter(v => {
       return v.chatid === chatId;
-    })
+    });
+    const emoji = emojiList.split(' ').filter(v => v).map(v =>
+      ({text: v})
+    )
     return (
       <div id='chat-page'>
         <NavBar
           mode="dark"
-          icon={<Icon type="left" />}
-          onLeftClick={()=>{
-          this.props.history.goBack()
+          icon={<Icon type="left"/>}
+          onLeftClick={() => {
+            this.props.history.goBack()
           }}>
           {users[userid].name}
         </NavBar>
@@ -77,9 +90,9 @@ class Chat extends Component {
             :
             (<List key={v._id}>
               <Item
-                extra={<img src={avatar} alt="" />}
+                extra={<img src={avatar} alt=""/>}
                 className='chat-me'
-                >{v.content}</Item>
+              >{v.content}</Item>
             </List>)
         })}
 
@@ -89,15 +102,39 @@ class Chat extends Component {
               value={text}
               placeholder="请输入信息"
               onChange={(v) => this.handleChange(v)}
-              extra={<span onClick={(v) => this.handleSend(v)}>发送</span>}>
+              extra={
+                <div>
+                  <span style={{marginRight: 15}}
+                        onClick={() => {
+                          this.setState({
+                            showEmoji: !this.state.showEmoji
+                          });
+                          this.fixCarousel();
+                        }}
+                  >😀</span>
+                  <span onClick={(v) => this.handleSend(v)}>发送</span>
+                </div>
+
+              }>
 
             </InputItem>
             {/*chat with user: {this.props.match.params.user}*/}
           </List>
+          {this.state.showEmoji ?
+            <Grid
+              data={emoji}
+              columnNum={9}
+              isCarousel={true}
+              carouselMaxRow={4}
+              onClick={(el) => {
+                this.setState({
+                  text: this.state.text + el.text
+                })
+              }}
+            /> : null
+          }
         </div>
       </div>
-
-
     )
   }
 }
