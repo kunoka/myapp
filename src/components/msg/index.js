@@ -36,7 +36,12 @@ class Msg extends Component {
       msgGroup[v.chatid].push(v);
     });
 
-    const chatList = Object.values(msgGroup);
+    // 按时间排序 倒序（最新的在最上面）
+    const chatList = Object.values(msgGroup).sort((a,b) => {
+      const a_createtime = this.getLast(a).create_time;
+      const b_createtime = this.getLast(b).create_time;
+      return b_createtime -a_createtime;
+    });
     const userid = this.props.user._id;
     return (<div>
       {chatList.map(v => {
@@ -50,6 +55,7 @@ class Msg extends Component {
             <Item
               extra={<Badge text={unreadNum} />}
               thumb={require(`../img/${userInfo.avatar}.png`)}
+              arrow='horizontal'
             >
               {lastItem.content}
               <Brief>{userInfo.name}</Brief>
