@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
     ];
     return (
       <div>
-        {/*{!this.props.user.isAuth && <Redirect to="/login"/>}*/}
+        {!this.props.user.isAuth && <Redirect to="/login"/>}
         <NavBar mode='dard'>
           {this.props.user.isAuth && navList.find(v => v.path === pathname).title}</NavBar>
         <div>

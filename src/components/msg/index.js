@@ -25,7 +25,6 @@ class Msg extends Component {
   }
 
   render() {
-
     const {chatmsg} = this.props.chat;
     if (!chatmsg.length) return null;
     let msgGroup = {};
@@ -37,11 +36,12 @@ class Msg extends Component {
     });
 
     // 按时间排序 倒序（最新的在最上面）
-    const chatList = Object.values(msgGroup).sort((a,b) => {
-      const a_createtime = this.getLast(a).create_time;
-      const b_createtime = this.getLast(b).create_time;
-      return b_createtime -a_createtime;
+    const chatList = Object.values(msgGroup).sort((a, b) => {
+      const a_last = this.getLast(a).create_time;
+      const b_last = this.getLast(b).create_time;
+      return b_last - a_last;
     });
+
     const userid = this.props.user._id;
     return (<div>
       {chatList.map(v => {
@@ -53,9 +53,12 @@ class Msg extends Component {
         return (
           <List key={lastItem._id}>
             <Item
-              extra={<Badge text={unreadNum} />}
+              extra={<Badge text={unreadNum}/>}
               thumb={require(`../img/${userInfo.avatar}.png`)}
               arrow='horizontal'
+              onClick={() => {
+                this.props.history.push(`/chat/${targetId}`)
+              }}
             >
               {lastItem.content}
               <Brief>{userInfo.name}</Brief>

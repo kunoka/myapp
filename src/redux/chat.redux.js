@@ -24,6 +24,29 @@ function msgRecv(data, userid) {
   }
 }
 
+function msgRead({from, userid, num}) {
+  return {
+    type: MSG_READ,
+    from,
+    userid,
+    num
+  }
+}
+
+// 标记消息为已读
+export function readMsg(from) {
+  return (dispatch, getState) => {
+    axios.post('/user/readMsg', {from}).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        const {num} = res.data;
+        console.log('res', res);
+        const userid = getState().user._id;
+        dispatch(msgRead({from, userid, num}))
+      }
+    })
+  }
+}
+
 // 收消息
 export function recvMsg() {
   return (dispatch, getState) => {
@@ -44,7 +67,7 @@ export function sendMsg({from, to, msg}) {
 }
 
 //  获取消息列表
-export const getMsgList = () => {
+export function getMsgList() {
   return (dispatch, getState) => {
     axios.get('/user/getMsgList').then((res) => {
       const userid = getState().user._id;
@@ -54,6 +77,7 @@ export const getMsgList = () => {
     });
   }
 }
+
 const initState = {
   chatmsg: [],
   users: null,
@@ -76,11 +100,16 @@ export default (state = initState, action) => {
         return {
           ...state,
           chatmsg: [...state.chatmsg, action.data],
-          // chatmsg: getChatMsg([...state.chatmsg, action.data]),
           unread: state.unread + n
         }
       }
-
+      return state;
+    case MSG_READ:
+      return {
+        ...state,
+        chatmsg: state.chatmsg.map(v=>({...v, read: true})),
+        unread: state.unread - action.num
+      }
     default:
       return state;
   }

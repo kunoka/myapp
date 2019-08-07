@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {List, InputItem, NavBar, Icon, Grid} from 'antd-mobile';
 import {connect} from 'react-redux';
-import {getMsgList, sendMsg, recvMsg} from '../../redux/chat.redux';
+import {getMsgList, sendMsg, recvMsg, readMsg} from '../../redux/chat.redux';
 import {getChatId} from '../../utils';
 import {emojiList} from '../../constants/emojs';
 
@@ -9,7 +9,7 @@ const Item = List.Item;
 
 @connect(
   state => state,
-  {getMsgList, sendMsg, recvMsg}
+  {getMsgList, sendMsg, recvMsg, readMsg}
 )
 class Chat extends Component {
   constructor(props) {
@@ -27,6 +27,11 @@ class Chat extends Component {
       this.props.recvMsg();
     }
     this.fixCarousel();
+  }
+
+  componentWillUnmount() {
+    const to = this.props.match.params.user;
+    this.props.readMsg(to);
   }
 
   // 修正跑马灯
