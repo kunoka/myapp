@@ -105,10 +105,11 @@ export default (state = initState, action) => {
       }
       return state;
     case MSG_READ:
+      const {from, num} = action;
       return {
         ...state,
-        chatmsg: state.chatmsg.map(v=>({...v, read: true})),
-        unread: state.unread - action.num
+        chatmsg: state.chatmsg.map(v => ({...v, read: v.from === from ? true : v.read})),
+        unread: state.unread - num
       }
     default:
       return state;

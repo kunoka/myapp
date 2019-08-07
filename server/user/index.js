@@ -7,8 +7,8 @@ const Utility = require('utility');
 const _filter = {'pwd': 0, '__v': 0}
 
 // 清除聊天记录
-Chat.remove({}, function(err, doc){
-})
+// Chat.remove({}, function(err, doc){
+// })
 
 Router.get('/list', function (req, res) {
   //清空所有数据
