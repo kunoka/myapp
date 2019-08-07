@@ -7,11 +7,11 @@ import NavLinkBar from '../../components/navlink';
 import Boss from '../../components/boss';
 import Genius from '../../components/genius';
 import User from '../../components/user';
+import Msg from '../../components/msg';
+
 import {getMsgList, recvMsg} from '../../redux/chat.redux';
 
-function Msg() {
-  return <h2>msg</h2>
-}
+
 
 @connect(
   state => state,
@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
     ];
     return (
       <div>
-        {!this.props.user.isAuth && <Redirect to="/login"/>}
+        {/*{!this.props.user.isAuth && <Redirect to="/login"/>}*/}
         <NavBar mode='dard'>
           {this.props.user.isAuth && navList.find(v => v.path === pathname).title}</NavBar>
         <div>
