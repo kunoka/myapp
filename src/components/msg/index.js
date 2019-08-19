@@ -49,7 +49,7 @@ class Msg extends Component {
         const targetId = v[0].from === userid ? v[0].to : v[0].from;
         const unreadNum = v.filter((v) => !v.read && v.to === userid).length;
         const userInfo = this.props.chat.users[targetId];
-        if (!userInfo) return;
+        if (!userInfo) return null;
         return (
           <List key={lastItem._id}>
             <Item

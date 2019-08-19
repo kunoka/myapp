@@ -1,9 +1,7 @@
 import axios from 'axios';
 import io from 'socket.io-client';
-import Lodash from 'lodash';
 
 const socket = io('ws://localhost:9093');
-
 const MSG_LIST = 'MSG_LIST';
 const MSG_RECV = 'MSG_RECV';
 const MSG_READ = 'MSG_READ';
@@ -125,8 +123,7 @@ function exist(chatmsg, data) {
   }
   return false;
 }
-
-function getChatMsg(data) {
-  const result = Lodash.uniqWith(data, Lodash.isEqual)
-  return result;
-}
+// function getChatMsg(data) {
+//   const result = Lodash.uniqWith(data, Lodash.isEqual)
+//   return result;
+// }

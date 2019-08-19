@@ -50,6 +50,8 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.7.2",
+    "rc-animate": "^2.9.2",
+    "rc-tween-one": "^2.5.0",
     "react": "^16.8.3",
     "react-app-polyfill": "^0.2.1",
     "react-dev-utils": "^7.0.3",
@@ -74,10 +76,16 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "server": "nodemon server"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "jsx-a11y/accessible-emoji": [
+        0
+      ]
+    }
   },
   "browserslist": [
     ">0.2%",

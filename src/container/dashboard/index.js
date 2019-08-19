@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import {NavBar} from 'antd-mobile';
 import {connect} from 'react-redux';
 import NavLinkBar from '../../components/navlink';
@@ -10,7 +10,6 @@ import User from '../../components/user';
 import Msg from '../../components/msg';
 
 import {getMsgList, recvMsg} from '../../redux/chat.redux';
-
 
 
 @connect(
@@ -70,13 +69,11 @@ class Dashboard extends React.Component {
         <NavBar mode='dard'>
           {this.props.user.isAuth && navList.find(v => v.path === pathname).title}</NavBar>
         <div>
-          <Switch>
             {navList.map((nav) => {
               return (
                 <Route key={nav.path} path={nav.path} component={nav.component}></Route>
               )
             })}
-          </Switch>
         </div>
         <NavLinkBar data={navList}/>
       </div>

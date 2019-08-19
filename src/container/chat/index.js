@@ -62,7 +62,7 @@ class Chat extends Component {
   }
 
   render() {
-    const {text, msg} = this.state;
+    const {text} = this.state;
     const userid = this.props.match.params.user;
     let {users, chatmsg} = this.props.chat;
     if (!users) return null;
