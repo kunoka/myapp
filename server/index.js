@@ -1,5 +1,6 @@
 import express from 'express';
 import React from 'react';
+import {renderToString} from 'react-dom/server';
 // const express = require('express');
 import bodyParse from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -14,9 +15,13 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 function App() {
-  return <h2>Server Render</h2>
+  return <div>
+    <h2>Server Render</h2>
+    <p>Body</p>
+  </div>
 }
-console.log(App());
+const htmlStr = renderToString(<App></App>)
+console.log(htmlStr);
 
 io.on('connection', function (socket) {
   console.log('user login');
@@ -39,7 +44,9 @@ app.use(function(req, res, next) {
   if(req.url.startsWith('/user/') || req.url.startsWith('/static/')){
     return next();
   }
-  return res.sendFile(path.resolve('build/index.html'));
+  const htmlStr = renderToString(<App></App>);
+  res.send(htmlStr);
+  // return res.sendFile(path.resolve('build/index.html'));
 });
 app.use('/', express.static(path.resolve('build')));
 server.listen(9093, function () {
