@@ -1,8 +1,10 @@
-const express = require('express');
-const bodyParse = require('body-parser');
-const cookieParser = require('cookie-parser');
-const model = require('./model');
-const path = require('path');
+import express from 'express';
+import React from 'react';
+// const express = require('express');
+import bodyParse from 'body-parser';
+import cookieParser from 'cookie-parser';
+import model from './model';
+import path from 'path';
 const User = model.getModel('user');
 const Chat = model.getModel('chat');
 
@@ -10,6 +12,11 @@ const app = express();
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+
+function App() {
+  return <h2>Server Render</h2>
+}
+console.log(App());
 
 io.on('connection', function (socket) {
   console.log('user login');
