@@ -78,9 +78,17 @@ app.use(function (req, res, next) {
     const type = propArr[len - 1];
     const value = staticPath[key];
     if (type === 'css') {
-      csshtml += `<link rel="stylesheet" href="${value}">`;
+      if (!csshtml) {
+        csshtml = `<link rel="stylesheet" href="${value}">`;
+      } else {
+        csshtml += `\r\n<link rel="stylesheet" href="${value}">`;
+      }
     } else if (type === 'js') {
-      jsthml += `<script src="${value}"></script>`;
+      if (!jsthml) {
+        jsthml = `<script src="${value}"></script>`;
+      } else {
+        jsthml += `\r\n<script src="${value}"></script>`;
+      }
     }
   });
   console.log('jsthml', jsthml);
