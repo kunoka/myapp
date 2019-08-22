@@ -5,7 +5,7 @@ import React from 'react';
 import csshook from 'css-modules-require-hook/preset' // import hook before routes
 import assethook from 'asset-require-hook';
 
-import {renderToString} from 'react-dom/server';
+import {renderToString, renderToNodeStream} from 'react-dom/server';
 
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
@@ -57,14 +57,15 @@ app.use(function (req, res, next) {
     applyMiddleware(thunk)
   ));
   const context = {};
-  const markup = renderToString(
-    <Provider store={store}>
-      <StaticRouter
-        location={req.url}
-        context={context}>
-        <App/>
-      </StaticRouter>
-    </Provider>);
+  // const markup = renderToString(
+  //   <Provider store={store}>
+  //     <StaticRouter
+  //       location={req.url}
+  //       context={context}>
+  //       <App/>
+  //     </StaticRouter>
+  //   </Provider>);
+
   const obj = {
     '/msg': 'React聊天消息列表',
     '/boss': 'boss查看牛人列表页面',
@@ -91,31 +92,64 @@ app.use(function (req, res, next) {
       }
     }
   });
-  console.log('jsthml', jsthml);
-  const pagehtml = `
-  <!doctype html>
+  res.write(`<!doctype html>
   <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <link rel="shortcut icon" href="/favicon.ico"/>
-        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
-        <meta name="theme-color" content="#000000"/>
-        <link rel="manifest" href="/manifest.json"/>
-        <title>React App${req.url}</title>
-        ${csshtml}
-        <meta name="keywords" content="React,Redux, Imooc,聊天,SSR"/>
-        <meta name="description" content="${obj[req.url]}"/>
-        <meta name="author" content="Imooc" />
-    </head>
-    <body>
-      <noscript>You need to enable JavaScript to run this app.</noscript>
-      <div id="root">${markup}</div>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+    <meta name="theme-color" content="#000000"/>
+    <link rel="manifest" href="/manifest.json"/>
+    <title>React App${req.url}</title>
+    ${csshtml}
+    <meta name="keywords" content="React,Redux, Imooc,聊天,SSR"/>
+    <meta name="description" content="${obj[req.url]}"/>
+    <meta name="author" content="Imooc" />
+  </head>
+  <body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root">`);
+  const markupStream = renderToNodeStream(
+    <Provider store={store}>
+      <StaticRouter
+        location={req.url}
+        context={context}>
+        <App/>
+      </StaticRouter>
+    </Provider>);
+  markupStream.pipe(res, {end: false});
+  markupStream.on('end', () => {
+    res.write(`</div>
       ${jsthml}
-     </body>
-    </html>
-`;
+     </body></html>`);
+    res.end();
+  });
+
+
+//   const pagehtml = `
+//   <!doctype html>
+//   <html lang="en">
+//     <head>
+//         <meta charset="utf-8"/>
+//         <link rel="shortcut icon" href="/favicon.ico"/>
+//         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+//         <meta name="theme-color" content="#000000"/>
+//         <link rel="manifest" href="/manifest.json"/>
+//         <title>React App${req.url}</title>
+//         ${csshtml}
+//         <meta name="keywords" content="React,Redux, Imooc,聊天,SSR"/>
+//         <meta name="description" content="${obj[req.url]}"/>
+//         <meta name="author" content="Imooc" />
+//     </head>
+//     <body>
+//       <noscript>You need to enable JavaScript to run this app.</noscript>
+//       <div id="root">${markup}</div>
+//       ${jsthml}
+//      </body>
+//     </html>
+// `;
   // const htmlStr = renderToString(<App></App>);
-  res.send(pagehtml);
+  // res.send(pagehtml);
   // return res.sendFile(path.resolve('build/index.html'));
 });
 app.use('/', express.static(path.resolve('build')));

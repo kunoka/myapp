@@ -15,7 +15,7 @@ const store = createStore(reducers, compose(
 ));
 
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>
       <App />
